@@ -1,22 +1,13 @@
-import { AppShell, AppShellProps } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { ReactNode } from "react";
 import { ShellHeader } from "./header";
 import { ShellNav } from "./nav";
+import {appShellStyles} from "@/components/shell/shell-style.ts";
 
 interface Props {
   children: ReactNode;
 }
-
-export const appShellStyles: Required<AppShellProps>["styles"] = (theme) => {
-  const { colorScheme, colors } = theme;
-  return {
-    main: {
-      background: colorScheme === "dark" ? colors.dark[8] : colors.gray[0],
-      overflowX: "hidden",
-    },
-  };
-};
 
 export const Shell = (props: Props): JSX.Element => {
   const { children } = props;

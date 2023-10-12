@@ -5,7 +5,7 @@ import {ActionFunction, createBrowserRouter, LoaderFunction, RouterProvider} fro
 import {Notifications} from "@mantine/notifications";
 import {ReactNode} from "react";
 import {Shell} from "@/components/shell/shell.tsx";
-import setupAxiosDefault from "@/service/setupAxios.ts";
+import setupAxiosDefault from "@/provider/setupAxios.ts";
 
 setupAxiosDefault();
 interface ElementProp {

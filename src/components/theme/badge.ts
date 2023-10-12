@@ -7,9 +7,7 @@ export const ThemeBadge: ThemeComponent<
   BadgeStylesParams
 > = {
   defaultProps: () => ({
-    // "filled" is too strong to be the default of H2
     variant: "dot",
-    // "md" is too small for Japanese
     size: "lg",
   }),
 };

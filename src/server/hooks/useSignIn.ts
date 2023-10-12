@@ -1,5 +1,6 @@
 import {useMutation} from "@tanstack/react-query";
-import {instanceCoreApi} from "@/service/setupAxios.ts";
+import {instanceCoreApi} from "@/provider/setupAxios.ts";
+import {AUTH_API} from "@/server/apis";
 
 type SignInRequest = {
     email: string;
@@ -8,7 +9,7 @@ type SignInRequest = {
 export const useSignIn = () => {
     return useMutation({
         mutationFn: async (props: SignInRequest) => {
-            await instanceCoreApi.post("/auth/login", props);
+            await instanceCoreApi.post(AUTH_API.LOGIN, props);
         }
     })
 }
