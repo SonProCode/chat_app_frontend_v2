@@ -19,10 +19,10 @@ export const ShellNav = (props: Props): JSX.Element => {
       <Navbar.Section grow>
         <Stack>
           <Anchor component={Link} to="/accounts/list" size="lg">
-              Accounts
+            Accounts
           </Anchor>
           <Anchor component={Link} to="/companies/list" size="lg">
-                Companies
+            Companies
           </Anchor>
         </Stack>
       </Navbar.Section>

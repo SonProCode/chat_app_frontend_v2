@@ -6,7 +6,6 @@ interface Props {
 }
 
 export const ShellHeader = (props: Props): JSX.Element => {
-
   const { nav, toggleNav } = props;
 
   return (
@@ -14,9 +13,7 @@ export const ShellHeader = (props: Props): JSX.Element => {
       <Header height={{ base: 70, sm: 0 }} p="md">
         <Burger
           opened={nav}
-          title={
-            nav ? "Close navigation":  "Open navigation"
-          }
+          title={nav ? "Close navigation" : "Open navigation"}
           onClick={toggleNav}
         />
       </Header>

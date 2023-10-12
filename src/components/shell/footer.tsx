@@ -8,7 +8,7 @@ export const ShellFooter = (): JSX.Element => {
 
   const logout = async () => {
     try {
-        // await auth.signOut();
+      // await auth.signOut();
     } catch (error) {
       console.error(error);
     } finally {
@@ -20,7 +20,7 @@ export const ShellFooter = (): JSX.Element => {
     <Stack>
       <ColorSchemeSelect />
       <Button leftIcon={<IconLogout size={16} />} onClick={logout}>
-          Sign out
+        Sign out
       </Button>
     </Stack>
   );

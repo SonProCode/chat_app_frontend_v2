@@ -3,7 +3,7 @@ import { useToggle } from "@mantine/hooks";
 import { ReactNode } from "react";
 import { ShellHeader } from "./header";
 import { ShellNav } from "./nav";
-import {appShellStyles} from "@/components/shell/shell-style.ts";
+import { appShellStyles } from "@/components/shell/shell-style.ts";
 
 interface Props {
   children: ReactNode;

@@ -8,7 +8,7 @@ import { getSignInFormValidation } from "../validation";
 import { SignInFields } from "./fields";
 import { SignInFooter } from "./footer";
 import { SignInHeader } from "./header";
-import {useSignIn} from "@/server/hooks/useSignIn.ts";
+import { useSignIn } from "@/server/hooks/useSignIn.ts";
 
 export const SignIn = (): JSX.Element => {
   const signIn = useSignIn();
@@ -19,11 +19,11 @@ export const SignIn = (): JSX.Element => {
   });
 
   const submit = async (values: SignInForm) => {
-      signIn.mutate(values, {
-            onSuccess: () => {
-                navigate("/");
-            }
-        });
+    signIn.mutate(values, {
+      onSuccess: () => {
+        navigate("/");
+      },
+    });
   };
 
   return (

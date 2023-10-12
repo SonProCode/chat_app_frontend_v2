@@ -23,19 +23,11 @@ const Label = (props: LabelProps): JSX.Element => {
 };
 
 const Light = (): JSX.Element => {
-  return (
-    <Label Icon={IconSun}>
-        Light
-    </Label>
-  );
+  return <Label Icon={IconSun}>Light</Label>;
 };
 
 const Dark = (): JSX.Element => {
-  return (
-    <Label Icon={IconMoon}>
-      Dark
-    </Label>
-  );
+  return <Label Icon={IconMoon}>Dark</Label>;
 };
 
 export const ColorSchemeSelect = (): JSX.Element => {
