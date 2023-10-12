@@ -9,11 +9,22 @@ type Filter = {
   sortBy?: string;
 };
 
-export const useListFriends = (filter: Filter) => {
+export const useListFriends = (props: { userID: string; filter?: Filter }) => {
+  const { userID, filter } = props;
+
   return useQuery({
     queryKey: ["list-friends"],
     queryFn: async () => {
-      await instanceCoreApi.post(RELATIONSHIP_API.LIST_FRIEND, filter);
+      const res = await instanceCoreApi.post(
+        RELATIONSHIP_API.LIST_FRIEND,
+        filter,
+        {
+          params: {
+            userID,
+          },
+        },
+      );
+      return res.data.data;
     },
   });
 };

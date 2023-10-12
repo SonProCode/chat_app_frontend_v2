@@ -20,7 +20,8 @@ export const SignIn = (): JSX.Element => {
 
   const submit = async (values: SignInForm) => {
     signIn.mutate(values, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        localStorage.setItem("token", data.data.token);
         navigate("/");
       },
     });

@@ -9,7 +9,7 @@ type SignInRequest = {
 export const useSignIn = () => {
   return useMutation({
     mutationFn: async (props: SignInRequest) => {
-      await instanceCoreApi.post(AUTH_API.LOGIN, props);
+      return await instanceCoreApi.post(AUTH_API.LOGIN, props);
     },
   });
 };

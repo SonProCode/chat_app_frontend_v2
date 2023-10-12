@@ -6,7 +6,8 @@ export const useGetMe = () => {
   return useQuery({
     queryKey: ["get-me"],
     queryFn: async () => {
-      await instanceCoreApi.get(AUTH_API.ME);
+      const res = await instanceCoreApi.get(AUTH_API.ME);
+      return res.data.data;
     },
   });
 };
