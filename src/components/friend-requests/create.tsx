@@ -6,10 +6,6 @@ import { Loader } from "@/components/loader";
 import React, { forwardRef } from "react";
 import { useListUserNotFriend } from "@/server/hooks/useListUserNotFriend.ts";
 
-type FormValues = {
-  friendID: string;
-};
-
 type UserSelectItem = {
   id: string;
   name: string;
@@ -39,6 +35,10 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   ),
 );
 
+type FormValues = {
+  friendID: string;
+};
+
 export const CreateFriendRequest = (props: { userID: string }) => {
   const { userID } = props;
   const users = useListUserNotFriend({ userID });
@@ -52,7 +52,7 @@ export const CreateFriendRequest = (props: { userID: string }) => {
   const onSubmit = (values: FormValues) => {
     console.log(create);
     create.mutate(
-      { userID, friendID: values.friendID },
+      { senderID: userID, receiverID: values.friendID },
       {
         onSuccess: () => {
           form.reset();

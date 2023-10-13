@@ -9,7 +9,7 @@ export const useListUserNotFriend = (props: { userID: string }) => {
     queryFn: async () => {
       const data = await instanceCoreApi.get(USER_API.GET_NOT_FRIEND, {
         params: {
-          id: userID,
+          userID,
         },
       });
       return data.data.data;

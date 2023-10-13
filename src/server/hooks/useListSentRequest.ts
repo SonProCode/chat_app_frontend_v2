@@ -1,6 +1,6 @@
-import { RELATIONSHIP_API } from "@/server/apis";
 import { instanceCoreApi } from "@/provider/setupAxios.ts";
 import { useQuery } from "@tanstack/react-query";
+import { REQUEST_API } from "@/server/apis/request.ts";
 
 export const useListSentRequest = (props: { userID: string }) => {
   const { userID } = props;
@@ -9,7 +9,7 @@ export const useListSentRequest = (props: { userID: string }) => {
     queryKey: ["list-sent-request"],
     queryFn: async () => {
       const data = await instanceCoreApi.get(
-        RELATIONSHIP_API.LIST_SENT_REQUEST,
+        REQUEST_API.GET_SENT_REQUEST_LIST,
         {
           params: {
             userID,

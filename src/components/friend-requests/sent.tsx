@@ -13,11 +13,12 @@ import { Loader } from "@/components/loader";
 
 type Request = {
   id: string;
-  status: string;
-  userID: string;
-  name: string;
-  email: string;
-  avatar: string;
+  receiver: {
+    id: string;
+    username: string;
+    email: string;
+    avatar: string;
+  };
 };
 export const SentRequestsList = (props: { userID: string }) => {
   const { userID } = props;
@@ -57,17 +58,17 @@ export const SentRequestsList = (props: { userID: string }) => {
                 <tr key={request.id}>
                   <td>
                     <Group noWrap>
-                      <Avatar src={request.avatar} />
+                      <Avatar src={request.receiver.avatar} />
                       <div>
-                        <Text size="sm">{request.name}</Text>
+                        <Text size="sm">{request.receiver.username}</Text>
                         <Text size="xs" opacity={0.65}>
-                          {request.email}
+                          {request.receiver.email}
                         </Text>
                       </div>
                     </Group>
                   </td>
                   <td>
-                    <Badge color="orange">{request.status}</Badge>
+                    <Badge color="orange">pending</Badge>
                   </td>
                 </tr>
               ))}
