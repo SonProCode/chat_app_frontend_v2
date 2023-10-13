@@ -6,7 +6,8 @@ export const useGetAllUsers = () => {
   return useQuery({
     queryKey: ["get-all-users"],
     queryFn: async () => {
-      await instanceCoreApi.get(USER_API.GET_ALL);
+      const data = await instanceCoreApi.get(USER_API.GET_ALL);
+      return data.data.data;
     },
   });
 };

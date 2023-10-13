@@ -9,7 +9,7 @@ type Filter = {
   sortBy?: string;
   email?: string;
 };
-export const useListUsers = (filter: Filter) => {
+export const useListUsers = (filter?: Filter) => {
   return useQuery({
     queryKey: ["list-users"],
     queryFn: async () => {

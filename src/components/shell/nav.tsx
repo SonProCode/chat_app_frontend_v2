@@ -1,6 +1,7 @@
 import {
   Button,
   Group,
+  Modal,
   Navbar,
   NavbarProps,
   Stack,
@@ -22,6 +23,7 @@ import { useState } from "react";
 import { ContactList } from "@/components/contacts/list.tsx";
 import { useGetMe } from "@/server/hooks/useGetMe.ts";
 import { Loader } from "@/components/loader";
+import { FriendRequests } from "@/components/friend-requests";
 
 interface Props {
   hidden: Required<NavbarProps>["hidden"];
@@ -30,12 +32,11 @@ interface Props {
 export const ShellNav = (props: Props): JSX.Element => {
   const { hidden } = props;
   const [activeTab, setActiveTab] = useState<string | null>("inbox");
+  const [openRequestModal, setOpenRequestModal] = useState<boolean>(false);
   const self = useGetMe();
 
-  console.log({ self });
-
   return (
-    <Navbar width={{ sm: 300 }} hidden={hidden} hiddenBreakpoint="sm" p="lg">
+    <Navbar width={{ sm: 400 }} hidden={hidden} hiddenBreakpoint="sm" p="lg">
       <Navbar.Section>
         <Group position="apart">
           <Button
@@ -64,6 +65,7 @@ export const ShellNav = (props: Props): JSX.Element => {
               },
             }}
             variant="subtle"
+            onClick={() => setOpenRequestModal(true)}
           >
             <IconUserPlus />
           </Button>
@@ -110,6 +112,14 @@ export const ShellNav = (props: Props): JSX.Element => {
       <Navbar.Section>
         <ShellFooter />
       </Navbar.Section>
+      <Modal
+        opened={openRequestModal}
+        onClose={() => setOpenRequestModal(false)}
+        title="Find new friends"
+        size="lg"
+      >
+        {self.isSuccess && <FriendRequests userID={self.data.userId} />}
+      </Modal>
     </Navbar>
   );
 };
