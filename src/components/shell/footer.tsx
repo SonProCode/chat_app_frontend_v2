@@ -12,6 +12,7 @@ export const ShellFooter = (): JSX.Element => {
     } catch (error) {
       console.error(error);
     } finally {
+      localStorage.removeItem("token");
       navigate("/sign-in");
     }
   };

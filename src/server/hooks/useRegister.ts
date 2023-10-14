@@ -4,7 +4,7 @@ import { instanceCoreApi } from "@/provider/setupAxios.ts";
 
 type GENDER = "male" | "female" | "other";
 
-type RegisterRequest = {
+export type RegisterRequest = {
   email: string;
   password: string;
   name: string;

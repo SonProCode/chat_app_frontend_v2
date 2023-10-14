@@ -43,7 +43,7 @@ const addInterceptor = (instant: AxiosInstance) => {
           title: "Phiên đăng nhập hết hạn",
           message: "Vui lòng đăng nhập lại",
         });
-        window.location.href = "/";
+        window.location.href = "/sign-in";
       }
       return Promise.reject(err);
     },
