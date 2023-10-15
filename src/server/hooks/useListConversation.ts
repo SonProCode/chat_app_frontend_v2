@@ -1,15 +1,15 @@
-import { instanceCoreApi } from "@/provider/setupAxios.ts";
 import { useQuery } from "@tanstack/react-query";
-import { REQUEST_API } from "@/server/apis";
+import { CONVERSATION_API } from "@/server/apis";
+import { instanceCoreApi } from "@/provider/setupAxios.ts";
 
-export const useListPendingRequest = (props: { userID: string }) => {
+export const useListConversation = (props: { userID: string }) => {
   const { userID } = props;
 
   return useQuery({
-    queryKey: ["list-pending-request"],
+    queryKey: ["list-conversation"],
     queryFn: async () => {
       const data = await instanceCoreApi.get(
-        REQUEST_API.GET_PENDING_REQUEST_LIST,
+        CONVERSATION_API.LIST_CONVERSATION,
         {
           params: {
             userID,

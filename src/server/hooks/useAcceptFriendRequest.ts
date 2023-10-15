@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { instanceCoreApi } from "@/provider/setupAxios.ts";
-import { REQUEST_API } from "@/server/apis/request.ts";
+import { REQUEST_API } from "@/server/apis";
 
 export const useAcceptFriendRequest = () => {
   const client = useQueryClient();

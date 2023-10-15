@@ -1,6 +1,6 @@
 import { instanceCoreApi } from "@/provider/setupAxios.ts";
 import { useQuery } from "@tanstack/react-query";
-import { REQUEST_API } from "@/server/apis/request.ts";
+import { REQUEST_API } from "@/server/apis";
 
 export const useListSentRequest = (props: { userID: string }) => {
   const { userID } = props;
