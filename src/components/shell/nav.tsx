@@ -18,12 +18,12 @@ import {
   IconUserPlus,
 } from "@tabler/icons-react";
 import { TabStyles } from "@/components/shell/styles.tsx";
-import { MessageList } from "@/components/messages/list.tsx";
 import { useState } from "react";
 import { ContactList } from "@/components/contacts/list.tsx";
 import { useGetMe } from "@/server/hooks/useGetMe.ts";
 import { Loader } from "@/components/loader";
 import { FriendRequests } from "@/components/friend-requests";
+import { ConversationList } from "@/components/conversations/list.tsx";
 
 interface Props {
   hidden: Required<NavbarProps>["hidden"];
@@ -102,7 +102,9 @@ export const ShellNav = (props: Props): JSX.Element => {
         {self.isLoading && <Loader />}
         {self.isSuccess && (
           <Stack>
-            {activeTab === "inbox" && <MessageList />}
+            {activeTab === "inbox" && (
+              <ConversationList userID={self.data.userId} />
+            )}
             {activeTab === "contacts" && (
               <ContactList userID={self.data.userId} />
             )}

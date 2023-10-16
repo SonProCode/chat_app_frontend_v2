@@ -13,9 +13,7 @@ export const useAcceptFriendRequest = () => {
       return res.data.data;
     },
     onSuccess: async () => {
-      await client.invalidateQueries(["get-all-not-friend-users"]);
-      await client.invalidateQueries(["list-friends"]);
-      await client.invalidateQueries(["list-pending-request"]);
+      await client.invalidateQueries(["list"]);
     },
   });
 };

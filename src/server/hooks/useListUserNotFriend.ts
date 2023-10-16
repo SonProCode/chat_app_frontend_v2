@@ -5,7 +5,7 @@ import { instanceCoreApi } from "@/provider/setupAxios.ts";
 export const useListUserNotFriend = (props: { userID: string }) => {
   const { userID } = props;
   return useQuery({
-    queryKey: ["get-all-not-friend-users"],
+    queryKey: ["list", "user", "not-friend"],
     queryFn: async () => {
       const data = await instanceCoreApi.get(USER_API.GET_NOT_FRIEND, {
         params: {

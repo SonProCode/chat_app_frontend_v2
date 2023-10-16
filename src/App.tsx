@@ -35,13 +35,9 @@ const pages: Record<string, Page> = import.meta.glob("./pages/**/*.tsx", {
   eager: true,
 });
 
-console.log({ pages });
-
 const routes: IRoute[] = [];
 for (const path of Object.keys(pages)) {
   const fileName = path.match(/\.\/pages\/(.*)\.tsx$/)?.[1];
-
-  console.log({ fileName });
 
   if (!fileName) {
     continue;
@@ -51,8 +47,6 @@ for (const path of Object.keys(pages)) {
     ? fileName.replace("$", ":")
     : fileName.replace(/\/index/, "");
 
-  console.log({ normalizedPathName });
-
   const fallbackElement: ElementProp = () => <></>;
   fallbackElement.Layout = (props) => <>{props.children}</>;
 
@@ -60,8 +54,6 @@ for (const path of Object.keys(pages)) {
     path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
     Element: pages[path]?.default || fallbackElement,
   };
-
-  console.log({ route });
 
   const pageLoader = pages[path]?.loader;
   if (pageLoader) route.loader = pageLoader;

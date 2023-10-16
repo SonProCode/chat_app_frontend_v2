@@ -13,7 +13,7 @@ export const useListFriends = (props: { userID: string; filter?: Filter }) => {
   const { userID, filter } = props;
 
   return useQuery({
-    queryKey: ["list-friends"],
+    queryKey: ["list", "friends"],
     queryFn: async () => {
       const res = await instanceCoreApi.post(
         RELATIONSHIP_API.LIST_FRIEND,

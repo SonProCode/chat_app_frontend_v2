@@ -6,7 +6,7 @@ export const useListPendingRequest = (props: { userID: string }) => {
   const { userID } = props;
 
   return useQuery({
-    queryKey: ["list-pending-request"],
+    queryKey: ["list", "pending-request"],
     queryFn: async () => {
       const data = await instanceCoreApi.get(
         REQUEST_API.GET_PENDING_REQUEST_LIST,
