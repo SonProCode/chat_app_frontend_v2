@@ -15,5 +15,6 @@ export const useListMessage = (props: { conversationID: string }) => {
       });
       return res.data.data;
     },
+    refetchInterval: 1000,
   });
 };

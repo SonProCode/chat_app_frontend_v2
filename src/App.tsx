@@ -108,10 +108,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ColorSchemeProvider>
+        {/*<SocketProvider>*/}
         <ThemeProvider>
           <Notifications position="top-right" />
           <RouterProvider router={router} />
         </ThemeProvider>
+        {/*</SocketProvider>*/}
       </ColorSchemeProvider>
     </QueryClientProvider>
   );

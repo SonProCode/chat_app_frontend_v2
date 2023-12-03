@@ -13,7 +13,7 @@ export const ConversationList = (props: { userID: string }) => {
       {conversations.isLoading && <Loader />}
       {conversations.isSuccess && conversations.data.totalItems > 0 ? (
         conversations.data.items.map((conversation: ConversationItem) => (
-          <ConversationItem conversation={conversation} />
+          <ConversationItem key={conversation.id} conversation={conversation} />
         ))
       ) : (
         <Text pt="xl" align="center">

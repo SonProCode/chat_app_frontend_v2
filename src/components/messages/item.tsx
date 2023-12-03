@@ -1,10 +1,18 @@
 import { Message } from "@/components/messages/list.tsx";
 import { Avatar, Group, Paper, Stack } from "@mantine/core";
+import { forwardRef, Ref } from "react";
 
-export const MessageItem = (props: { message: Message; isUser: boolean }) => {
+const MessageItem = (
+  props: {
+    message: Message;
+    isUser: boolean;
+  },
+  ref: Ref<HTMLDivElement>,
+) => {
   const { message, isUser } = props;
+  if (ref) console.log(message);
   return (
-    <Stack p="xs" align={isUser ? "flex-end" : "flex-start"}>
+    <Stack p="xs" align={isUser ? "flex-end" : "flex-start"} ref={ref}>
       <Group>
         {!isUser && (
           <Avatar
@@ -27,9 +35,17 @@ export const MessageItem = (props: { message: Message; isUser: boolean }) => {
           })}
           withBorder
         >
-          {message.body}
+          <div
+            style={{
+              margin: 0,
+              padding: 0,
+            }}
+            dangerouslySetInnerHTML={{ __html: message.body }}
+          />
         </Paper>
       </Group>
     </Stack>
   );
 };
+
+export const MessageItemRef = forwardRef(MessageItem);

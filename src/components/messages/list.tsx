@@ -1,7 +1,8 @@
 import { Paper } from "@mantine/core";
 import { useListMessage } from "@/server/hooks/useListMessage.ts";
 import { Loader } from "@/components/loader";
-import { MessageItem } from "@/components/messages/item.tsx";
+import { MessageItemRef } from "@/components/messages/item.tsx";
+import { useEffect, useRef } from "react";
 
 export type Message = {
   id: string;
@@ -23,22 +24,39 @@ export const MessageList = (props: {
   const { userID, conversationID } = props;
 
   const messages = useListMessage({ conversationID });
+  const lastMessageRef = useRef<HTMLDivElement>(null);
 
-  console.log({ userID, messages });
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  });
 
   return (
     <Paper
       withBorder
       mih={"calc(100vh - 260px)"}
       mah={"calc(100vh - 260px)"}
-      style={{ overflowY: "auto" }}
+      style={{
+        overflowY: "auto",
+      }}
     >
       {messages.isError && <div>error</div>}
       {messages.isLoading && <Loader />}
       {messages.isSuccess &&
         userID &&
         messages.data.items.map((message: Message) => (
-          <MessageItem message={message} isUser={message.owner.id === userID} />
+          <MessageItemRef
+            ref={
+              message.id ===
+              messages.data.items[messages.data.totalItems - 1].id
+                ? lastMessageRef
+                : null
+            }
+            key={message.id}
+            message={message}
+            isUser={message.owner.id === userID}
+          />
         ))}
     </Paper>
   );

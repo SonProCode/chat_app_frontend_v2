@@ -8,17 +8,28 @@ import { MessageEditor } from "../editor";
 import { useForm } from "@mantine/form";
 import { IconSend } from "@tabler/icons-react";
 import { MessageList } from "@/components/messages/list.tsx";
+import { useCreateMessage } from "@/server/hooks/useCreateMessage.ts";
 
 export const Message = (props: { conversationID: string }) => {
   const { conversationID } = props;
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const self = useGetMe();
+  const createMessage = useCreateMessage();
 
   const conversation = useGetConversation({ id: conversationID });
   const form = useForm({
     initialValues: { message: "" },
   });
+
+  const onSubmit = (values: { message: string }) => {
+    createMessage.mutate({
+      conversationID,
+      body: values.message,
+      ownerID: self.data.userId,
+    });
+    form.reset();
+  };
 
   return (
     <Stack m={0} p={0}>
@@ -39,14 +50,20 @@ export const Message = (props: { conversationID: string }) => {
               userID={self.data.userId}
               conversationID={conversationID}
             />
-            <form onSubmit={form.onSubmit(console.log)}>
+            <form onSubmit={form.onSubmit(onSubmit)}>
               <Grid gutter={0} align="center" columns={24}>
                 <Grid.Col span={23}>
                   <MessageEditor form={form} />
                 </Grid.Col>
                 <Grid.Col span={1}>
                   <Group position="right">
-                    <ActionIcon size="xl" variant="gradient" type="submit">
+                    <ActionIcon
+                      disabled={!form.isTouched()}
+                      size="xl"
+                      variant="gradient"
+                      type="submit"
+                      loading={createMessage.isLoading}
+                    >
                       <IconSend />
                     </ActionIcon>
                   </Group>
