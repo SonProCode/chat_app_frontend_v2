@@ -5,7 +5,7 @@ import { CONVERSATION_API } from "@/server/apis";
 export const useGetConversation = (props: { id: string }) => {
   const { id } = props;
   return useQuery({
-    queryKey: ["get-conversation"],
+    queryKey: ["conversation", id, "get"],
     queryFn: async () => {
       const res = await instanceCoreApi.get(CONVERSATION_API.GET_CONVERSATION, {
         params: {

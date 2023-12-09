@@ -20,7 +20,7 @@ export const useCreateConversation = () => {
       return res.data.data;
     },
     onSuccess: async () => {
-      await client.invalidateQueries(["list-conversation"]);
+      await client.invalidateQueries(["conversation", "list"]);
     },
   });
 };

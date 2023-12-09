@@ -13,7 +13,7 @@ export const useAcceptFriendRequest = () => {
       return res.data.data;
     },
     onSuccess: async () => {
-      await client.invalidateQueries(["list"]);
+      await client.invalidateQueries(["conversation", "list"]);
     },
   });
 };

@@ -1,6 +1,20 @@
-import { Avatar, Box, Button, Card, Group, Stack, Text } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Group,
+  Menu,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
-import { IconDots } from "@tabler/icons-react";
+import {
+  IconAlphabetLatin,
+  IconDots,
+  IconTrashFilled,
+  IconUserCircle,
+} from "@tabler/icons-react";
 
 export type ConversationItem = {
   id: string;
@@ -13,6 +27,7 @@ export type ConversationItem = {
       id: string;
       username: string;
       avatar: string;
+      nickname: string;
     };
   }[];
 };
@@ -49,23 +64,37 @@ export const ConversationItem = (props: { conversation: ConversationItem }) => {
               alt={friend.username}
             />
             <Stack>
-              <Text fw={600}>{friend.username}</Text>
+              <Text fw={600}>
+                {friend.nickname ? friend.nickname : friend.username}
+              </Text>
             </Stack>
           </Group>
-          <Button
-            p={0}
-            styles={{
-              root: {
-                boxShadow: "none",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-              },
-            }}
-            variant="subtle"
-          >
-            <IconDots />
-          </Button>
+
+          <Menu shadow="md" withinPortal>
+            <Menu.Target>
+              <Button
+                p={0}
+                styles={{
+                  root: {
+                    boxShadow: "none",
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
+                  },
+                }}
+                variant="subtle"
+              >
+                <IconDots />
+              </Button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item icon={<IconUserCircle />}>View Profile</Menu.Item>
+              <Menu.Item icon={<IconAlphabetLatin />}>Set nickname</Menu.Item>
+              <Menu.Item icon={<IconTrashFilled color="red" />}>
+                Delete conversation
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         </Group>
       </Box>
     </Card>
