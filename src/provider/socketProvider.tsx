@@ -1,3 +1,4 @@
+import { SOCKET_EVENTS } from "@/utils/constant";
 import {
   createContext,
   ReactNode,
@@ -18,13 +19,28 @@ export const SocketProvider = (props: { children: ReactNode }): JSX.Element => {
   const [socket, setSocket] = useState<Socket>();
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
-    setSocket(newSocket);
-    return () => {
-      if (newSocket) {
-        newSocket.close();
-      }
-    };
+    // Lấy token từ localStorage (hoặc bất kỳ nơi nào bạn lưu trữ token)
+    const token = localStorage.getItem("token"); // Giả sử token được lưu trữ trong localStorage
+
+    if (token) {
+      // Nếu token có, thêm nó vào query khi kết nối với WebSocket
+      const newSocket = io("http://localhost:3000", {
+        transports: ["websocket"],
+        query: { token }, // Thêm token vào query
+        reconnectionAttempts: 5, // Number of retry attempts
+        timeout: 10000,
+      });
+      setSocket(newSocket);
+
+      // Cleanup khi component unmount
+      return () => {
+        if (newSocket) {
+          newSocket.close();
+        }
+      };
+    } else {
+      console.error("Token is required");
+    }
   }, []);
 
   return (

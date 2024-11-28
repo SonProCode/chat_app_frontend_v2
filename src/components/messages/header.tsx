@@ -10,6 +10,7 @@ import {
   Text,
   Menu,
   Title,
+  ActionIcon,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -17,13 +18,30 @@ import {
   IconUserCircle,
   IconAlphabetLatin,
   IconTrashFilled,
+  IconVideo,
 } from "@tabler/icons-react";
 import { UpsertNickname } from "../nicknames/upsert";
+import { useSocket } from "@/provider/socketProvider";
+import { useEffect, useRef } from "react";
 
 export const MessageHeader = (props: {
   conversationDetail: ConversationItem;
   userID: string;
 }) => {
+  const socket = useSocket();
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("call_declined", () => {
+        closePopup();
+        alert("Cuộc gọi đã bị từ chối.");
+      });
+      return () => {
+        socket.off("call_declined");
+      };
+    }
+  }, [socket]);
+
   const { conversationDetail, userID } = props;
 
   const friend = conversationDetail.participants.find(
@@ -34,6 +52,26 @@ export const MessageHeader = (props: {
     useDisclosure();
 
   if (!friend) return null;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const callPopupRef = useRef<Window | null>(null);
+
+  const call = () => {
+    callPopupRef.current = window.open(
+      "/videocalls/" + conversationDetail.id + "?type=1",
+      "_blank",
+      "width=800,height=600",
+    );
+  };
+
+  // Hàm đóng cửa sổ pop-up
+  const closePopup = () => {
+    console.log("MAN HINH", callPopupRef.current);
+    if (callPopupRef.current && !callPopupRef.current.closed) {
+      callPopupRef.current.close();
+      callPopupRef.current = null;
+      console.log("Cửa sổ pop-up đã được đóng.");
+    }
+  };
 
   return (
     <Card p={0}>
@@ -55,6 +93,16 @@ export const MessageHeader = (props: {
                 {friend.nickname ? friend.nickname : friend.username}
               </Text>
             </Stack>
+            <ActionIcon
+              variant="light"
+              component="button"
+              onClick={(e) => {
+                e.preventDefault();
+                call();
+              }}
+            >
+              <IconVideo size={20} />
+            </ActionIcon>
           </Group>
           <Menu shadow="md" withinPortal position="bottom-end">
             <Menu.Target>
