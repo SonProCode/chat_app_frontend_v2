@@ -15,11 +15,11 @@ export function usePeerConnection(localStream: MediaStream | null) {
 
     connection.addEventListener("track", ({ streams }) => {
       setGuestStream(streams[0]);
-      console.log("STREAMS", streams);
+      //console.log("STREAMS", streams);
     });
 
     localStream?.getTracks().forEach((track) => {
-      console.log("TRACK", track);
+      //console.log("TRACK", track);
       connection.addTrack(track, localStream);
     });
 
@@ -28,7 +28,7 @@ export function usePeerConnection(localStream: MediaStream | null) {
         candidate,
         roomName: id,
       });
-      console.log("CANDIDATE", candidate);
+      //console.log("CANDIDATE", candidate);
     });
     return connection;
   }, [id, localStream, socket]);

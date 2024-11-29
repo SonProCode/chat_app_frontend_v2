@@ -11,7 +11,7 @@ export function useSendingAnswer(peerConnection: RTCPeerConnection) {
     async ({ offer }: { offer: RTCSessionDescriptionInit }) => {
       await peerConnection.setRemoteDescription(offer);
       const answer = await peerConnection.createAnswer();
-      console.log("ANSWER IN useSendingAnswer", answer);
+      //console.log("ANSWER IN useSendingAnswer", answer);
       await peerConnection.setLocalDescription(answer);
 
       socket?.emit(SOCKET_EVENTS.CLIENT.ANSWER, { answer, roomName: id });
