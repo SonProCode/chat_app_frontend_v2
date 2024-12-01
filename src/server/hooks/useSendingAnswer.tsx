@@ -18,14 +18,18 @@ export function useSendingAnswer(peerConnection: RTCPeerConnection) {
           return;
         }
 
+        // Thiết lập remote description
         await peerConnection.setRemoteDescription(offer);
 
+        // Kiểm tra trạng thái sau khi thiết lập remoteDescription
         if (peerConnection.signalingState === "have-remote-offer") {
           const answer = await peerConnection.createAnswer();
           console.log("ANSWER IN useSendingAnswer", answer);
 
+          // Thiết lập local description với answer
           await peerConnection.setLocalDescription(answer);
 
+          // Gửi answer cho server
           socket?.emit(SOCKET_EVENTS.CLIENT.ANSWER, { answer, roomName: id });
         } else {
           console.warn(

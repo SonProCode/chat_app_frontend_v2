@@ -65,7 +65,6 @@ export const MessageHeader = (props: {
 
   // Hàm đóng cửa sổ pop-up
   const closePopup = () => {
-    console.log("MAN HINH", callPopupRef.current);
     if (callPopupRef.current && !callPopupRef.current.closed) {
       callPopupRef.current.close();
       callPopupRef.current = null;

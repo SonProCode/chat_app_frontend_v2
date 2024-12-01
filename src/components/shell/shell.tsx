@@ -20,6 +20,7 @@ export const Shell = (props: Props): JSX.Element => {
   const [isCalling, setIsCalling] = useState(false);
   const [callerName, setCallerName] = useState<string>("");
   const [roomName, setRoomName] = useState<string>("");
+  const audioRef = useRef<HTMLAudioElement>(new Audio("/ringphone.mp3"));
 
   useEffect(() => {
     if (socket) {
@@ -27,6 +28,13 @@ export const Shell = (props: Props): JSX.Element => {
         setIsCalling(true);
         setCallerName(data.callerName);
         setRoomName(data.roomName);
+
+        if (audioRef.current) {
+          audioRef.current.play().catch((err) => {
+            console.error("Error playing ringtone:", err);
+          });
+        }
+
         console.log("Cuoc goi da OK");
       });
       return () => {
@@ -36,6 +44,10 @@ export const Shell = (props: Props): JSX.Element => {
   }, [socket]);
   const onAnswer = () => {
     setIsCalling(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     window.open(
       "/videocalls/" + roomName + "?type=2",
       "_blank",
@@ -49,6 +61,10 @@ export const Shell = (props: Props): JSX.Element => {
         roomName,
         userName: callerName,
       });
+    }
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
     setIsCalling(false);
   };

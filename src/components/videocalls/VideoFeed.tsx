@@ -17,9 +17,9 @@ export const VideoFeed: FunctionComponent<Props> = ({
         }
       }}
       style={{
-        width: "120px",
-        height: "120px",
-        borderRadius: "50%",
+        width: "100%",
+        height: "100%",
+        borderRadius: "8%",
         objectFit: "cover",
       }}
       autoPlay={true}
