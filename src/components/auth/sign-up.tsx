@@ -37,7 +37,8 @@ export const SignUp = (): JSX.Element => {
     },
     validate: {
       email: isEmail("Invalid email"),
-      password: isNotEmpty("Invalid password"),
+      password: (password) =>
+        password.length < 8 ? "Password must be at least 8 characters" : null,
       confirmPassword: (confirmPassword, formValues) =>
         confirmPassword !== formValues.password ? (
           <Text color="red">Passwords do not match</Text>
@@ -65,6 +66,18 @@ export const SignUp = (): JSX.Element => {
           setTimeout(() => {
             navigate("/sign-in");
           }, 3000);
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (error: any) => {
+          if (error.response?.data?.message === "email already exists") {
+            form.setFieldError("email", "Email already exists");
+          } else {
+            notifications.show({
+              title: "Registration failed",
+              message: "Something went wrong. Please try again.",
+              color: "red",
+            });
+          }
         },
       },
     );
