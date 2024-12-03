@@ -61,7 +61,7 @@ export function usePeerConnection(localStream: MediaStream | null) {
         await peerConnectionRef.current.setLocalDescription(offer);
 
         // Sau khi có offer, gửi tới server hoặc xử lý
-        socket?.emit(SOCKET_EVENTS.CLIENT.SEND_OFFER, {
+        socket?.emit(SOCKET_EVENTS.CLIENT.SEND_CONNECTION_OFFER, {
           offer,
           roomName: id,
         });

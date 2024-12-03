@@ -44,6 +44,8 @@ export const MessageHeader = (props: {
 
   const { conversationDetail, userID } = props;
 
+  const isIndividual = conversationDetail.type === "individual";
+
   const friend = conversationDetail.participants.find(
     (participant) => participant.user.id !== userID,
   )?.user;
@@ -84,24 +86,30 @@ export const MessageHeader = (props: {
             <Avatar
               size="lg"
               radius="xl"
-              src={friend.avatar}
-              alt={friend.username}
+              src={
+                isIndividual ? friend?.avatar : conversationDetail.image // Avatar nhóm.
+              }
+              alt={isIndividual ? friend?.username : conversationDetail.name}
             />
             <Stack>
               <Text fw={600}>
-                {friend.nickname ? friend.nickname : friend.username}
+                {isIndividual
+                  ? friend?.nickname || friend?.username
+                  : conversationDetail.name}
               </Text>
             </Stack>
-            <ActionIcon
-              variant="light"
-              component="button"
-              onClick={(e) => {
-                e.preventDefault();
-                call();
-              }}
-            >
-              <IconVideo size={20} />
-            </ActionIcon>
+            {isIndividual && (
+              <ActionIcon
+                variant="light"
+                component="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  call();
+                }}
+              >
+                <IconVideo size={20} />
+              </ActionIcon>
+            )}
           </Group>
           <Menu shadow="md" withinPortal position="bottom-end">
             <Menu.Target>
