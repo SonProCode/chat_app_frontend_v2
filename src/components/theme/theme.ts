@@ -6,11 +6,7 @@ import { ThemeCheckbox } from "./checkbox";
 import { themeFocusRingStyle } from "./focus";
 import { ThemeInput } from "./input";
 import { ThemePagination } from "./pagination";
-import { themeOtherShadows, ThemeOtherShadows } from "./shadows";
-
-declare module "@mantine/core" {
-  export interface MantineThemeOther extends ThemeOtherShadows {}
-}
+import { themeOtherShadows } from "./shadows";
 
 export const theme: MantineThemeOverride = {
   defaultRadius: "xs",
@@ -20,6 +16,8 @@ export const theme: MantineThemeOverride = {
     Checkbox: ThemeCheckbox,
     Input: ThemeInput,
     Pagination: ThemePagination,
+    // Force type due to incompatible "size"
+    // See: https://github.com/mantinedev/mantine/issues/3759
   } as MantineTheme["components"],
   cursorType: "pointer",
   focusRing: "auto",
