@@ -1,4 +1,3 @@
-import { SOCKET_EVENTS } from "@/utils/constant";
 import {
   createContext,
   ReactNode,
@@ -8,8 +7,10 @@ import {
 } from "react";
 import io, { Socket } from "socket.io-client";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const SocketContext = createContext<Socket | undefined>(undefined);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSocket = () => {
   return useContext(SocketContext);
 };

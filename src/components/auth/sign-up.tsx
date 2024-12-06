@@ -1,6 +1,6 @@
 import { AuthShell } from "@/components/shell/auth-shell.tsx";
 import { useNavigate } from "react-router-dom";
-import { isEmail, isNotEmpty, useForm } from "@mantine/form";
+import { isEmail, useForm } from "@mantine/form";
 import {
   Anchor,
   Button,

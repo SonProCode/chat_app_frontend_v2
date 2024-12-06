@@ -13,8 +13,6 @@ import {
   IconMicrophone,
   IconMicrophoneOff,
   IconPhone,
-  IconScreenShare,
-  IconUserPlus,
   IconVideo,
   IconVideoOff,
 } from "@tabler/icons-react";
