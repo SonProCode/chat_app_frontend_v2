@@ -22,7 +22,8 @@ import {
 } from "@tabler/icons-react";
 import { UpsertNickname } from "../nicknames/upsert";
 import { useSocket } from "@/provider/socketProvider";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useGetUserDetail } from "@/server/hooks/useGetUserDetail";
 
 export const MessageHeader = (props: {
   conversationDetail: ConversationItem;
@@ -50,11 +51,24 @@ export const MessageHeader = (props: {
     (participant) => participant.user.id !== userID,
   )?.user;
 
+  const participants = conversationDetail.participants.filter(
+    (participant) => participant.user.id !== userID,
+  );
+
+  let friendId = friend?.id;
+  if (friendId == undefined) friendId = "";
+  const friendDetail = useGetUserDetail(friendId);
+  console.log("DETAIL", friendId, friendDetail.data);
+
   const [openedSetNicknameModal, { toggle: toggleSetNicknameModal }] =
     useDisclosure();
 
+  const [
+    openedProfileModal,
+    { open: openProfileModal, close: closeProfileModal },
+  ] = useDisclosure();
+
   if (!friend) return null;
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const callPopupRef = useRef<Window | null>(null);
 
   const call = () => {
@@ -65,7 +79,6 @@ export const MessageHeader = (props: {
     );
   };
 
-  // Hàm đóng cửa sổ pop-up
   const closePopup = () => {
     if (callPopupRef.current && !callPopupRef.current.closed) {
       callPopupRef.current.close();
@@ -73,6 +86,54 @@ export const MessageHeader = (props: {
       console.log("Cửa sổ pop-up đã được đóng.");
     }
   };
+
+  const userProfileContent = (
+    <Box>
+      <Group>
+        <Avatar
+          size="xl"
+          src={friend.avatar}
+          alt={friend.username}
+          radius="xl"
+        />
+        <Stack spacing="xs">
+          <Title order={3}>{friend.nickname || friend.username}</Title>
+          <Text color="dimmed">
+            Email: {friendDetail?.data?.email || "Không có thông tin"}
+          </Text>
+          <Text color="dimmed">
+            Name: {friendDetail?.data?.name || "Không có thông tin"}
+          </Text>
+        </Stack>
+      </Group>
+    </Box>
+  );
+
+  const groupProfileContent = (
+    <Box>
+      <Stack spacing="xs">
+        {participants.map((participant, index) => (
+          <Card key={participant.user.id} shadow="sm" p="md" withBorder>
+            <Group position="apart">
+              <Group>
+                <Avatar
+                  size="lg"
+                  src={participant.user.avatar}
+                  alt={participant.user.username}
+                  radius="xl"
+                />
+                <Stack spacing={0}>
+                  <Text fw={600}>
+                    {participant.user.nickname || participant.user.username}
+                  </Text>
+                </Stack>
+              </Group>
+            </Group>
+          </Card>
+        ))}
+      </Stack>
+    </Box>
+  );
 
   return (
     <Card p={0}>
@@ -86,9 +147,7 @@ export const MessageHeader = (props: {
             <Avatar
               size="lg"
               radius="xl"
-              src={
-                isIndividual ? friend?.avatar : conversationDetail.image // Avatar nhóm.
-              }
+              src={isIndividual ? friend?.avatar : conversationDetail.image}
               alt={isIndividual ? friend?.username : conversationDetail.name}
             />
             <Stack>
@@ -129,15 +188,14 @@ export const MessageHeader = (props: {
               </Button>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item icon={<IconUserCircle />}>View Profile</Menu.Item>
+              <Menu.Item icon={<IconUserCircle />} onClick={openProfileModal}>
+                View Detail
+              </Menu.Item>
               <Menu.Item
                 icon={<IconAlphabetLatin />}
                 onClick={toggleSetNicknameModal}
               >
                 Set nickname
-              </Menu.Item>
-              <Menu.Item icon={<IconTrashFilled color="red" />}>
-                Delete conversation
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
@@ -161,6 +219,18 @@ export const MessageHeader = (props: {
           onCancel={toggleSetNicknameModal}
           onSuccess={toggleSetNicknameModal}
         />
+      </Modal>
+      <Modal
+        opened={openedProfileModal}
+        onClose={closeProfileModal}
+        title={
+          <Title order={2}>
+            {isIndividual ? "Thông tin người dùng" : "Thông tin nhóm"}
+          </Title>
+        }
+        size="md"
+      >
+        {isIndividual ? userProfileContent : groupProfileContent}
       </Modal>
     </Card>
   );

@@ -8,6 +8,7 @@ import { useForm } from "@mantine/form";
 import { IconSend } from "@tabler/icons-react";
 import { MessageList } from "@/components/messages/list.tsx";
 import { useCreateMessage } from "@/server/hooks/useCreateMessage.ts";
+import { useEffect } from "react";
 
 export const Message = (props: { conversationID: string }) => {
   const { conversationID } = props;
@@ -21,12 +22,19 @@ export const Message = (props: { conversationID: string }) => {
   });
 
   const onSubmit = (values: { message: string }) => {
-    createMessage.mutate({
-      conversationID,
-      body: values.message,
-      ownerID: self.data.userId,
-    });
-    form.reset();
+    createMessage.mutate(
+      {
+        conversationID,
+        body: values.message,
+        ownerID: self.data.userId,
+      },
+      {
+        onSuccess: () => {
+          console.log("form da reset");
+          form.reset();
+        },
+      },
+    );
   };
 
   return (

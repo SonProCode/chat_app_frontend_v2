@@ -14,7 +14,9 @@ import {
   IconDots,
   IconTrashFilled,
   IconUserCircle,
+  IconUsers,
 } from "@tabler/icons-react";
+import { useGetMe } from "@/server/hooks/useGetMe";
 
 export type ConversationItem = {
   id: string;
@@ -34,13 +36,14 @@ export type ConversationItem = {
 
 export const ConversationItem = (props: { conversation: ConversationItem }) => {
   const { conversation } = props;
+  const self = useGetMe();
 
   const friend = conversation.participants.find(
-    (participant) => participant.user.id !== conversation.creatorID,
+    (participant) => participant.user.id !== self.data.userId,
   )?.user;
 
   if (!friend) return null;
-
+  console.log("FRIEND", friend, conversation.creatorID);
   const isIndividual = conversation.type === "individual";
 
   return (
@@ -73,32 +76,11 @@ export const ConversationItem = (props: { conversation: ConversationItem }) => {
               </Text>
             </Stack>
           </Group>
-
-          <Menu shadow="md" withinPortal>
-            <Menu.Target>
-              <Button
-                p={0}
-                styles={{
-                  root: {
-                    boxShadow: "none",
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                    },
-                  },
-                }}
-                variant="subtle"
-              >
-                <IconDots />
-              </Button>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item icon={<IconUserCircle />}>View Profile</Menu.Item>
-              <Menu.Item icon={<IconAlphabetLatin />}>Set nickname</Menu.Item>
-              <Menu.Item icon={<IconTrashFilled color="red" />}>
-                Delete conversation
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
+          {isIndividual ? (
+            <IconUserCircle size={17} />
+          ) : (
+            <IconUsers size={17} />
+          )}
         </Group>
       </Box>
     </Card>
