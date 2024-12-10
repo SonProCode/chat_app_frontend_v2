@@ -8,7 +8,6 @@ import { useForm } from "@mantine/form";
 import { IconSend } from "@tabler/icons-react";
 import { MessageList } from "@/components/messages/list.tsx";
 import { useCreateMessage } from "@/server/hooks/useCreateMessage.ts";
-import { useEffect } from "react";
 
 export const Message = (props: { conversationID: string }) => {
   const { conversationID } = props;

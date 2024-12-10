@@ -1,21 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Group,
-  Menu,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Avatar, Box, Card, Group, Stack, Text } from "@mantine/core";
 import { Link } from "react-router-dom";
-import {
-  IconAlphabetLatin,
-  IconDots,
-  IconTrashFilled,
-  IconUserCircle,
-  IconUsers,
-} from "@tabler/icons-react";
+import { IconUserCircle, IconUsers } from "@tabler/icons-react";
 import { useGetMe } from "@/server/hooks/useGetMe";
 
 export type ConversationItem = {

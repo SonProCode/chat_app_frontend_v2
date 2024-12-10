@@ -17,12 +17,11 @@ import {
   IconDots,
   IconUserCircle,
   IconAlphabetLatin,
-  IconTrashFilled,
   IconVideo,
 } from "@tabler/icons-react";
 import { UpsertNickname } from "../nicknames/upsert";
 import { useSocket } from "@/provider/socketProvider";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useGetUserDetail } from "@/server/hooks/useGetUserDetail";
 
 export const MessageHeader = (props: {
@@ -112,7 +111,7 @@ export const MessageHeader = (props: {
   const groupProfileContent = (
     <Box>
       <Stack spacing="xs">
-        {participants.map((participant, index) => (
+        {participants.map((participant) => (
           <Card key={participant.user.id} shadow="sm" p="md" withBorder>
             <Group position="apart">
               <Group>
